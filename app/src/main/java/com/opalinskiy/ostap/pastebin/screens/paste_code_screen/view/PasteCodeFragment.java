@@ -39,6 +39,15 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
         return view;
     }
 
+    public static PasteCodeFragment newInstance(String url, int myOrTrending) {
+        Bundle args = new Bundle();
+        args.putString(Constants.URL_KEY, url);
+        args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTrending);
+        PasteCodeFragment fragment = new PasteCodeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onResume() {
         setTitle(getResources().getString(R.string.paste_code));

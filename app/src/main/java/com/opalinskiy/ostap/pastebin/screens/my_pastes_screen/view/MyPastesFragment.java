@@ -42,11 +42,16 @@ public class MyPastesFragment extends BaseFragment
         return view;
     }
 
-    public static PasteCodeFragment newInstance(String url, int myOrTrending) {
+    public static MyPastesFragment newInstance(int myOrTRending) {
+
         Bundle args = new Bundle();
-        args.putString(Constants.URL_KEY, url);
-        args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTrending);
-        PasteCodeFragment fragment = new PasteCodeFragment();
+        if(myOrTRending == Constants.TRENDING_PASTES){
+            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
+        }else {
+            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.MY_PASTES);
+        }
+
+        MyPastesFragment fragment = new MyPastesFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,7 +77,7 @@ public class MyPastesFragment extends BaseFragment
 
     @Override
     public void onItemClick(String url) {
-        PasteCodeFragment fragment = newInstance(url, myOrTrending);
+        PasteCodeFragment fragment =  PasteCodeFragment.newInstance(url, myOrTrending);
         ((NavigationDrawerActivity) getActivity()).commitFragment(fragment
                 , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true, false);
     }

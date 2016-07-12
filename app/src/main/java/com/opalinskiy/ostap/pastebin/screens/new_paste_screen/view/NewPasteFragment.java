@@ -57,6 +57,15 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
         return view;
     }
 
+    public static NewPasteFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        NewPasteFragment fragment = new NewPasteFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);

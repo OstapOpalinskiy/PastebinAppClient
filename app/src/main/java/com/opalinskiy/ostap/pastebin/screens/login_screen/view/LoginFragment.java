@@ -43,6 +43,15 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
         return view;
     }
 
+    public static LoginFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        LoginFragment fragment = new LoginFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private void initViews(View view) {
         etLogin = (EditText) view.findViewById(R.id.et_login_FL);
         etPassword = (EditText) view.findViewById(R.id.et_password_FL);

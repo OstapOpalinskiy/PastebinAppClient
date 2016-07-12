@@ -90,30 +90,26 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Bundle args = new Bundle();
         int id = item.getItemId();
 
         if (id == R.id.nav_new_paste) {
-            NewPasteFragment fragment = new NewPasteFragment();
+            NewPasteFragment fragment = NewPasteFragment.newInstance();
             commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_trending) {
-            MyPastesFragment fragment = new MyPastesFragment();
-            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
-            fragment.setArguments(args);
+            MyPastesFragment fragment = MyPastesFragment.newInstance(Constants.TRENDING_PASTES);
             commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_my_pastes) {
-            MyPastesFragment fragment = new MyPastesFragment();
-            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.MY_PASTES);
-            fragment.setArguments(args);
+            MyPastesFragment fragment = MyPastesFragment.newInstance(Constants.MY_PASTES);
             commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_profile) {
-            ProfileFragment fragment = new ProfileFragment();
+            ProfileFragment fragment = ProfileFragment.newInstance();
             commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false, true);
+
         } else if (id == R.id.nav_log_in) {
-            LoginFragment fragment = new LoginFragment();
+            LoginFragment fragment = LoginFragment.newInstance();
             commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false, true);
         }
 
