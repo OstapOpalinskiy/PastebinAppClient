@@ -27,7 +27,6 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     public MainScreenPresenter(final IMainScreen.IView view) {
         this.view = view;
         Application.getComponent().inject(this);
-
     }
 
     @Override
