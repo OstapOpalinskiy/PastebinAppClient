@@ -32,15 +32,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
     private IMainScreen.IPresenter presenter;
     private ImageView avatar;
     private TextView name;
-    private SharedPreferences preferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         init();
-        presenter.setData(preferences);
+        presenter.setData();
         if (savedInstanceState == null) {
             NewPasteFragment fragment = new NewPasteFragment();
             commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, false);
@@ -48,7 +46,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     protected void init() {
-        preferences = getSharedPreferences(Constants.PREFS_NAME, 0);
         presenter = new MainScreenPresenter(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -173,7 +170,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     @Override
     public void setProfileScreen() {
-        presenter.setData(preferences);
+        presenter.setData();
         commitFragment(new ProfileFragment(), Constants.PROFILE_FRAGMENT_TAG, false, true);
     }
 

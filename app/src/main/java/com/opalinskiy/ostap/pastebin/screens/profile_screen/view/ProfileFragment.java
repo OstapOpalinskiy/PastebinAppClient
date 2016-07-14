@@ -1,22 +1,19 @@
 package com.opalinskiy.ostap.pastebin.screens.profile_screen.view;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
+import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter.ProfilePresenter;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,7 +25,6 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     private TextView tvLogOut;
     private CircleImageView avatar;
     private IProfileScreen.IPresenter presenter;
-    private SharedPreferences prefs;
 
 
     @Nullable
@@ -37,11 +33,10 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         initViews(view);
         presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity());
-        prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onLogout(prefs);
+                presenter.onLogout();
             }
         });
         return view;
@@ -58,7 +53,7 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
 
     @Override
     public void onResume() {
-        presenter.loadData(prefs);
+        presenter.loadData();
         setTitle(getResources().getString(R.string.profile));
         super.onResume();
     }

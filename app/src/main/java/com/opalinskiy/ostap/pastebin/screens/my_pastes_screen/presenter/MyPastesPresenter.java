@@ -20,9 +20,12 @@ import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
-    private IDataInteractor model;
+    @Inject
+    IDataInteractor model;
     private IMyPastesScreen.IView view;
     private int myOrTrending;
     private RequestParams parameters;

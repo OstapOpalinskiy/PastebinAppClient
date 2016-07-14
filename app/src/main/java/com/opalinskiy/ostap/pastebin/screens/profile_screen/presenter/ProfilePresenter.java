@@ -3,6 +3,7 @@ package com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
@@ -15,23 +16,29 @@ import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPre
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
+import javax.inject.Inject;
+
 
 public class ProfilePresenter implements IProfileScreen.IPresenter {
     private IMainScreen.IPresenter mainPresenter;
     private IProfileScreen.IProfileView view;
-    private IDataInteractor model;
-    private RequestParams parameters;
+    @Inject
+    IDataInteractor model;
+    @Inject
+    RequestParams parameters;
+    @Inject
+    SharedPreferences prefs;
 
     public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView) {
         this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.view = view;
         mainPresenter = new MainScreenPresenter(mainView);
-        parameters = new RequestParams();
+        Application.getComponent().inject(this);
     }
 
     @Override
-    public void onLogout(SharedPreferences preferences) {
-        mainPresenter.onLogout(preferences);
+    public void onLogout() {
+        mainPresenter.onLogout();
     }
 
 
@@ -58,7 +65,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
     }
 
     @Override
-    public void loadData(SharedPreferences prefs) {
+    public void loadData() {
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         Log.d(Constants.TAG, "is Registered:  in profile:" + isRegistered);
         if (isRegistered) {

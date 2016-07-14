@@ -36,7 +36,7 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
             public void onClick(View v) {
                 String login = String.valueOf(etLogin.getText());
                 String password = String.valueOf(etPassword.getText());
-                presenter.onLogin(login, password, prefs);
+                presenter.onLogin(login, password);
 
             }
         });

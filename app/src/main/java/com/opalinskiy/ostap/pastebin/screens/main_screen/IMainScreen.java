@@ -8,19 +8,19 @@ import com.opalinskiy.ostap.pastebin.interactor.models.User;
 public interface IMainScreen {
 
     interface IPresenter {
-        void loadUser(SharedPreferences prefs, boolean userChanged);
+        void loadUser(boolean userChanged);
 
-        void loadUserKey(SharedPreferences prefs, boolean userChanged);
+        void loadUserKey(boolean userChanged);
 
         void onDestroy();
 
         void setUserInfo(User user);
 
-        void setData(SharedPreferences prefs);
+        void setData();
 
-        void onLogout(SharedPreferences preferences);
+        void onLogout();
 
-        void onLogin(String login, String password, SharedPreferences preferences);
+        void onLogin(String login, String password);
     }
 
     interface IView {

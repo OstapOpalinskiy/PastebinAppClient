@@ -17,7 +17,7 @@ public class LoginPresenter implements ILoginScreen.IPresenter {
     }
 
     @Override
-    public void onLogin(String login, String password, SharedPreferences preferences) {
-        mainPresenter.onLogin(login, password, preferences);
+    public void onLogin(String login, String password) {
+        mainPresenter.onLogin(login, password);
     }
 }

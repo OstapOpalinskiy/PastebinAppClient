@@ -8,7 +8,7 @@ import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
 public interface ILoginScreen {
 
     interface IPresenter {
-        void onLogin(String login, String password, SharedPreferences preferences);
+        void onLogin(String login, String password);
     }
 
     interface ILoginView extends IBaseFragment {}
