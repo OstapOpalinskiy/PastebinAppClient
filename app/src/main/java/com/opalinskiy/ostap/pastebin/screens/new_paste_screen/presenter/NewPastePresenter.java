@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
@@ -16,16 +17,19 @@ import com.opalinskiy.ostap.pastebin.interactor.models.PasteCodeParams;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
+import javax.inject.Inject;
+
 
 public class NewPastePresenter implements INewPaste.IPresenter {
     private INewPaste.IView view;
-    private IDataInteractor model;
-    private RequestParams parameters;
+    @Inject
+    IDataInteractor model;
+    @Inject
+    RequestParams parameters;
 
     public NewPastePresenter(INewPaste.IView view) {
         this.view = view;
-        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
-        parameters = new RequestParams();
+        Application.getComponent().inject(this);
     }
 
     @Override

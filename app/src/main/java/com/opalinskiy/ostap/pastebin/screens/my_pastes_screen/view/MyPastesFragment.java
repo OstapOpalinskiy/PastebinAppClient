@@ -63,11 +63,6 @@ public class MyPastesFragment extends BaseFragment
     }
 
     @Override
-    public void showMessage() {
-        Toast.makeText(getActivity(), R.string.you_need_login, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void setDataToRecyclerView(List<Paste> myPastes) {
         MyPastesAdapter adapter = new MyPastesAdapter(myPastes, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

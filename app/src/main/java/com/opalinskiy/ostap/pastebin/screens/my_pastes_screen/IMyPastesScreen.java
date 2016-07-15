@@ -26,8 +26,6 @@ public interface IMyPastesScreen {
 
     interface IView extends IBaseFragment {
         void setDataToRecyclerView(List<Paste> myPastes);
-
-        void showMessage();
     }
 
     interface IItemClickHandler {

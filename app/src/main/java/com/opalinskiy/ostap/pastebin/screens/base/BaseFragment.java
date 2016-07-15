@@ -2,7 +2,10 @@ package com.opalinskiy.ostap.pastebin.screens.base;
 
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.opalinskiy.ostap.pastebin.global.Constants;
 
 
 public class BaseFragment extends Fragment implements IBaseFragment {
@@ -25,7 +28,8 @@ public class BaseFragment extends Fragment implements IBaseFragment {
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        Log.d(Constants.TAG1, "SHOW MSG BASE" + getActivity());
+        Toast.makeText(getActivity(), "11111111111111111", Toast.LENGTH_LONG).show();
     }
 
     @Override

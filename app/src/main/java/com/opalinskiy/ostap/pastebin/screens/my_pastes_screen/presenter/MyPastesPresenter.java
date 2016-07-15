@@ -7,15 +7,12 @@ import android.util.Log;
 import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,18 +21,17 @@ import javax.inject.Inject;
 
 
 public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
-    @Inject
-    IDataInteractor model;
     private IMyPastesScreen.IView view;
     private int myOrTrending;
-    private RequestParams parameters;
-
+    @Inject
+    IDataInteractor model;
+    @Inject
+    RequestParams parameters;
 
     public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
-        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
-        parameters = new RequestParams();
+        Application.getComponent().inject(this);
     }
 
     @Override
@@ -50,7 +46,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             if (isRegistered) {
                 getMyPastes(userKey);
             } else {
-                view.showMessage();
+                view.showMessage(Application.getContext().getString(R.string.you_need_login));
             }
         } else {
             getTrends();
@@ -127,6 +123,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             view.setDataToRecyclerView(myPastes);
         } else {
             view.showMessage(Application.getContext().getString(R.string.no_pastes_yet));
+            Log.d(Constants.TAG1, "paste list is Empty()" + myPastes.size() );
         }
     }
 
