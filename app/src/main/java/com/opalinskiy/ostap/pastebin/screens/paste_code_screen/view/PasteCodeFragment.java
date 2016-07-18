@@ -3,7 +3,6 @@ package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,15 +13,22 @@ import android.widget.TextView;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerPasteCodeComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.PasteCodeComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PasteCodeModule;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.IPasteCodeScreen;
-import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.presenter.PasteCodePresenter;
+import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
+
+import javax.inject.Inject;
 
 public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.IView {
     private TextView tvCode;
-    private IPasteCodeScreen.IPresenter presenter;
     private String url;
-
+    @Inject
+    IPasteCodeScreen.IPresenter presenter;
 
     @Nullable
     @Override
@@ -34,7 +40,11 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
         if (myOrTrending == Constants.MY_PASTES) {
             setHasOptionsMenu(true);
         }
-        presenter = new PasteCodePresenter(this);
+       PasteCodeComponent component = DaggerPasteCodeComponent.builder()
+                .pasteCodeModule(new PasteCodeModule(this))
+                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
+                .build();
+        component.inject(this);
         presenter.getCode(url);
         return view;
     }

@@ -3,18 +3,13 @@ package com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import javax.inject.Inject;
 

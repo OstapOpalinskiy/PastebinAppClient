@@ -23,15 +23,15 @@ import javax.inject.Inject;
 public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private IMyPastesScreen.IView view;
     private int myOrTrending;
-    @Inject
-    IDataInteractor model;
-    @Inject
-    RequestParams parameters;
+    private IDataInteractor model;
+    private RequestParams parameters;
 
-    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
+    @Inject
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, IDataInteractor model, RequestParams parameters) {
         this.view = view;
         this.myOrTrending = myOrTrending;
-       // Application.getComponent().inject(this);
+        this.model = model;
+        this.parameters = parameters;
     }
 
     @Override

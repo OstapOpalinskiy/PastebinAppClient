@@ -14,15 +14,18 @@ import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 
 public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     private IDataInteractor model;
     private IPasteCodeScreen.IView view;
 
 
-    public PasteCodePresenter(IPasteCodeScreen.IView view) {
+    @Inject
+    public PasteCodePresenter(IDataInteractor model, IPasteCodeScreen.IView view) {
+        this.model = model;
         this.view = view;
-        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
     }
 
     @Override

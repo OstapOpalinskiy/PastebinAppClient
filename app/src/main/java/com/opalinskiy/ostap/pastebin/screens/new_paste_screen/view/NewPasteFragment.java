@@ -24,13 +24,22 @@ import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerNewPasteComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.NewPasteComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.NewPasteModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteCodeParams;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
-import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter.NewPastePresenter;
+import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
+
+import javax.inject.Inject;
 
 public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
-    private INewPaste.IPresenter presenter;
+    @Inject
+    INewPaste.IPresenter presenter;
     private EditText etCode;
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageView bottomSheetArrow;
@@ -92,7 +101,13 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     }
 
     private void init(View view) {
-        presenter = new NewPastePresenter(this);
+        NewPasteComponent component = DaggerNewPasteComponent.builder()
+                .newPasteModule(new NewPasteModule(this))
+                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
+                .paramsModule(new ParamsModule())
+                .build();
+        component.inject(this);
+
         etCode = (EditText) view.findViewById(R.id.et_code_MSF);
 
         View bottomSheet = view.findViewById(R.id.bottom_sheet_view);

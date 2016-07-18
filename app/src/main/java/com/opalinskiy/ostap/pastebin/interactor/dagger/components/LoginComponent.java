@@ -13,8 +13,7 @@ import dagger.Component;
 
 
 @Singleton
-@Component(modules = {PrefsModule.class, DataModule.class, ParamsModule.class,
-        MainPresenterModule.class, LoginPresenterModule.class})
+@Component(modules = {PrefsModule.class, DataModule.class, ParamsModule.class, MainPresenterModule.class, LoginPresenterModule.class})
 public interface LoginComponent {
         void inject(LoginFragment loginFragment);
 }

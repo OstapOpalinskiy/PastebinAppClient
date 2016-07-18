@@ -17,15 +17,15 @@ import javax.inject.Inject;
 
 
 public class NewPastePresenter implements INewPaste.IPresenter {
-    private INewPaste.IView view;
-    @Inject
-    IDataInteractor model;
-    @Inject
-    RequestParams parameters;
+     private INewPaste.IView view;
+     private IDataInteractor model;
+     private RequestParams parameters;
 
-    public NewPastePresenter(INewPaste.IView view) {
+    @Inject
+    public NewPastePresenter(INewPaste.IView view, IDataInteractor model, RequestParams parameters) {
         this.view = view;
-       // Application.getComponent().inject(this);
+        this.model = model;
+        this.parameters = parameters;
     }
 
     @Override
