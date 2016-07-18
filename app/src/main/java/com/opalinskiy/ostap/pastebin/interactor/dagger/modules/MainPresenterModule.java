@@ -21,7 +21,7 @@ public class MainPresenterModule {
     @Provides
     IMainScreen.IPresenter provideMainScreenPresenter(IDataInteractor model,
                                                       RequestParams parameters,
-                                                      SharedPreferences prefs){
+                                                      SharedPreferences prefs) {
         return new MainScreenPresenter(view, model, parameters, prefs);
     }
 }
