@@ -22,18 +22,18 @@ import javax.inject.Inject;
 public class ProfilePresenter implements IProfileScreen.IPresenter {
     private IMainScreen.IPresenter mainPresenter;
     private IProfileScreen.IProfileView view;
-    @Inject
-    IDataInteractor model;
-    @Inject
-    RequestParams parameters;
-    @Inject
-    SharedPreferences prefs;
+    private IDataInteractor model;
+    private RequestParams parameters;
+    private SharedPreferences prefs;
 
-    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView) {
-        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+    @Inject
+    public ProfilePresenter(IMainScreen.IPresenter mainPresenter, IProfileScreen.IProfileView view,
+                            IDataInteractor model, RequestParams parameters, SharedPreferences prefs) {
+        this.mainPresenter = mainPresenter;
         this.view = view;
-        mainPresenter = new MainScreenPresenter(mainView);
-        Application.getComponent().inject(this);
+        this.model = model;
+        this.parameters = parameters;
+        this.prefs = prefs;
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
@@ -16,18 +15,16 @@ import javax.inject.Inject;
 
 public class MainScreenPresenter implements IMainScreen.IPresenter {
     private IMainScreen.IView view;
+    private IDataInteractor model;
+    private RequestParams parameters;
+    private SharedPreferences prefs;
 
     @Inject
-    IDataInteractor model;
-    @Inject
-    RequestParams parameters;
-    @Inject
-    SharedPreferences prefs;
-
-    public MainScreenPresenter(final IMainScreen.IView view) {
+    public MainScreenPresenter(IMainScreen.IView view, IDataInteractor model, RequestParams parameters, SharedPreferences prefs) {
         this.view = view;
-        Application.getComponent().inject(this);
-        //changes from remote
+        this.model = model;
+        this.parameters = parameters;
+        this.prefs = prefs;
     }
 
     @Override

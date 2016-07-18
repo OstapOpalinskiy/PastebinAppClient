@@ -31,7 +31,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
         this.myOrTrending = myOrTrending;
-        Application.getComponent().inject(this);
+       // Application.getComponent().inject(this);
     }
 
     @Override

@@ -18,17 +18,27 @@ import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.AppComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerAppComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.view.LoginFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.view.MyPastesFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.view.NewPasteFragment;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.view.ProfileFragment;
+import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IMainScreen.IView {
-    private IMainScreen.IPresenter presenter;
+    @Inject
+    IMainScreen.IPresenter presenter;
     private ImageView avatar;
     private TextView name;
 
@@ -45,7 +55,15 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     protected void init() {
-        presenter = new MainScreenPresenter(this);
+
+        AppComponent component = DaggerAppComponent.builder()
+                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
+                .prefsModule(new PrefsModule(this))
+                .paramsModule(new ParamsModule())
+                .mainPresenterModule(new MainPresenterModule(this))
+                .build();
+        component.inject(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
