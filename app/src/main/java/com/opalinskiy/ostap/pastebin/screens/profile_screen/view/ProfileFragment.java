@@ -9,12 +9,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.opalinskiy.ostap.pastebin.R;
+import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerLoginComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerProfileComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.LoginComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.ProfileComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.LoginPresenterModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ProfileModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter.ProfilePresenter;
+import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,15 +38,25 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     private TextView tvLocation;
     private TextView tvLogOut;
     private CircleImageView avatar;
-    private IProfileScreen.IPresenter presenter;
+    @Inject
+    IProfileScreen.IPresenter presenter;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
+
+       ProfileComponent component = DaggerProfileComponent.builder()
+                .profileModule(new ProfileModule(this))
+                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
+                .prefsModule(new PrefsModule(getActivity()))
+                .paramsModule(new ParamsModule())
+                .mainPresenterModule(new MainPresenterModule((IMainScreen.IView) getActivity()))
+                .build();
+        component.inject(this);
+
         initViews(view);
-        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity());
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +66,9 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
         return view;
     }
 
+
     public static ProfileFragment newInstance() {
-        
         Bundle args = new Bundle();
-        
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
