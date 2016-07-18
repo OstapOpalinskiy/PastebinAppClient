@@ -15,6 +15,7 @@ public class MyPastesModule {
 
     public MyPastesModule(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
+        this.myOrTrending = myOrTrending;
     }
 
     @Provides
