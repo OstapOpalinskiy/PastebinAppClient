@@ -11,16 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerPasteCodeComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.PasteCodeComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PasteCodeModule;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.IPasteCodeScreen;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import javax.inject.Inject;
 
@@ -42,7 +41,7 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
         }
        PasteCodeComponent component = DaggerPasteCodeComponent.builder()
                 .pasteCodeModule(new PasteCodeModule(this))
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
+                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
         presenter.getCode(url);

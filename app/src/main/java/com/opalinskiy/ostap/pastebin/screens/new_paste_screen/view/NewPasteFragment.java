@@ -22,18 +22,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerNewPasteComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.NewPasteComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.NewPasteModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteCodeParams;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import javax.inject.Inject;
 
@@ -103,8 +101,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     private void init(View view) {
         NewPasteComponent component = DaggerNewPasteComponent.builder()
                 .newPasteModule(new NewPasteModule(this))
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
-                .paramsModule(new ParamsModule())
+                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
 

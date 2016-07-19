@@ -8,24 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerLoginComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerProfileComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.components.LoginComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.ProfileComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.LoginPresenterModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ProfileModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
-import com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter.ProfilePresenter;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -49,9 +42,7 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
 
        ProfileComponent component = DaggerProfileComponent.builder()
                 .profileModule(new ProfileModule(this))
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
-                .prefsModule(new PrefsModule(getActivity()))
-                .paramsModule(new ParamsModule())
+                .appModule(new  AppModule((Application) Application.getContext()))
                 .mainPresenterModule(new MainPresenterModule((IMainScreen.IView) getActivity()))
                 .build();
         component.inject(this);

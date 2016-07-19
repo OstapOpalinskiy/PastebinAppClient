@@ -16,21 +16,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.components.AppComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerAppComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerMainPresenterComponent;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.components.MainPresenterComponent;
+
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.view.LoginFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.view.MyPastesFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.view.NewPasteFragment;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.view.ProfileFragment;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -56,10 +54,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     protected void init() {
 
-        AppComponent component = DaggerAppComponent.builder()
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
-                .prefsModule(new PrefsModule(this))
-                .paramsModule(new ParamsModule())
+        MainPresenterComponent component = DaggerMainPresenterComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .mainPresenterModule(new MainPresenterModule(this))
                 .build();
         component.inject(this);

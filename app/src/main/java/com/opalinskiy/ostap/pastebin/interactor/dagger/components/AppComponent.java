@@ -1,25 +1,25 @@
 package com.opalinskiy.ostap.pastebin.interactor.dagger.components;
 
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.view.NavigationDrawerActivity;
-import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter.MyPastesPresenter;
-import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter.NewPastePresenter;
-import com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter.ProfilePresenter;
+import android.content.SharedPreferences;
+
+import com.opalinskiy.ostap.pastebin.Application;
+import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
+import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
+import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import retrofit2.Retrofit;
 
 @Singleton
-@Component(modules = {PrefsModule.class, DataModule.class, ParamsModule.class, MainPresenterModule.class})
+@Component(modules = AppModule.class)
 public interface AppComponent {
-    void inject(MainScreenPresenter mainScreenPresenter);
-    void inject(ProfilePresenter profilePresenter);
-    void inject(MyPastesPresenter myPastesPresenter);
-    void inject(NewPastePresenter newPastePresenter);
-    void inject(NavigationDrawerActivity activity);
+    Retrofit retrofit();
+    SharedPreferences preferences();
+    RequestParams params();
+    IDataInteractor dataInteractor();
+    ConverterUtils converter();
+    void inject(Application application);
 }

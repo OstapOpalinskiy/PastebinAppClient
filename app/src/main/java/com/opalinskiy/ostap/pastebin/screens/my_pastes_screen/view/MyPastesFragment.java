@@ -10,21 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerMyPastesComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.MyPastesComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MyPastesModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.view.NavigationDrawerActivity;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view.PasteCodeFragment;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import java.util.List;
 
@@ -47,10 +44,8 @@ public class MyPastesFragment extends BaseFragment
         Log.d(Constants.TAG1, "my or tranging" + myOrTrending);
 
         MyPastesComponent component = DaggerMyPastesComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .myPastesModule(new MyPastesModule(this, myOrTrending))
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
-                .prefsModule(new PrefsModule(getActivity()))
-                .paramsModule(new ParamsModule())
                 .build();
         component.inject(this);
 

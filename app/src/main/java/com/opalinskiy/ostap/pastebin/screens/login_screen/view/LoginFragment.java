@@ -9,20 +9,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.opalinskiy.ostap.pastebin.Application;
 import com.opalinskiy.ostap.pastebin.R;
-import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerLoginComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.LoginComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.DataModule;
+import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.LoginPresenterModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.ParamsModule;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.PrefsModule;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.ILoginScreen;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.presenter.LoginPresenter;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import javax.inject.Inject;
 
@@ -42,10 +39,8 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
 
         LoginComponent component = DaggerLoginComponent.builder()
                 .loginPresenterModule(new LoginPresenterModule())
-                .dataModule(new DataModule(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils()))
-                .prefsModule(new PrefsModule(getActivity()))
-                .paramsModule(new ParamsModule())
                 .mainPresenterModule(new MainPresenterModule((IMainScreen.IView) getActivity()))
+                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
 
