@@ -47,6 +47,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     private EditText etPasteName;
     private TextView tvLink;
     private TextView tvHeadLine;
+
+    // TODO: 7/19/16 This logic must be done in presenter implementation
     private boolean isLinkShown;
 
 
@@ -65,9 +67,9 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     }
 
     public static NewPasteFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         NewPasteFragment fragment = new NewPasteFragment();
         fragment.setArguments(args);
         return fragment;
@@ -84,6 +86,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                // TODO: 7/19/16 This logic can be moved into the presenter implementation
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     bottomSheetArrow.animate().rotation(0);
                 }
@@ -179,6 +182,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
         return super.onOptionsItemSelected(item);
     }
 
+    // TODO: 7/19/16 We call showLink from this method, why do we need this method?
+    @Override
     public void setText(String pasteUrl) {
         showLink(pasteUrl);
     }

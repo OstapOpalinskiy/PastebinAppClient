@@ -33,6 +33,7 @@ public class MyPastesFragment extends BaseFragment
     IMyPastesScreen.IPresenter presenter;
     private RecyclerView recyclerView;
     private int myOrTrending;
+    // TODO: 7/19/16 It can be injected via component
     private SharedPreferences prefs;
 
     @Nullable
@@ -49,6 +50,7 @@ public class MyPastesFragment extends BaseFragment
                 .build();
         component.inject(this);
 
+        // TODO: 7/19/16 Why do we want set myOrTrending, if we injected via constructor of presenter
         presenter.choseTitle(myOrTrending);
         presenter.showMyPastes(prefs);
         Log.d(Constants.TAG1, "TRENDING FRAGMENT onCreateView()");
@@ -58,6 +60,7 @@ public class MyPastesFragment extends BaseFragment
     public static MyPastesFragment newInstance(int myOrTRending) {
 
         Bundle args = new Bundle();
+        // TODO: 7/19/16 Why do you check this? You can give it to argument
         if (myOrTRending == Constants.TRENDING_PASTES) {
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
         } else {
@@ -77,6 +80,7 @@ public class MyPastesFragment extends BaseFragment
 
     @Override
     public void setDataToRecyclerView(List<Paste> myPastes) {
+        // TODO: 7/19/16 You can inject via component
         MyPastesAdapter adapter = new MyPastesAdapter(myPastes, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setAdapter(adapter);
