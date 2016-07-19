@@ -38,9 +38,9 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
         initViews(view);
 
         LoginComponent component = DaggerLoginComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .loginPresenterModule(new LoginPresenterModule())
                 .mainPresenterModule(new MainPresenterModule((IMainScreen.IView) getActivity()))
-                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
 

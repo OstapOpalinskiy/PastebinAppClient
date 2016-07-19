@@ -40,8 +40,8 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
             setHasOptionsMenu(true);
         }
        PasteCodeComponent component = DaggerPasteCodeComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .pasteCodeModule(new PasteCodeModule(this))
-                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
         presenter.getCode(url);

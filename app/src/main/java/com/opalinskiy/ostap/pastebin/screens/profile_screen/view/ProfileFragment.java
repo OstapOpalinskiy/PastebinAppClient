@@ -41,8 +41,8 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
        ProfileComponent component = DaggerProfileComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .profileModule(new ProfileModule(this))
-                .appModule(new  AppModule((Application) Application.getContext()))
                 .mainPresenterModule(new MainPresenterModule((IMainScreen.IView) getActivity()))
                 .build();
         component.inject(this);

@@ -1,4 +1,4 @@
-package com.opalinskiy.ostap.pastebin.interactor.dagger.components;
+package com.opalinskiy.ostap.pastebin.interactor.dagger;
 
 import java.lang.annotation.Documented;
 

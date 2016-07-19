@@ -100,8 +100,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     private void init(View view) {
         NewPasteComponent component = DaggerNewPasteComponent.builder()
+                .appComponent(Application.getAppComponent())
                 .newPasteModule(new NewPasteModule(this))
-                .appModule(new AppModule((Application) Application.getContext()))
                 .build();
         component.inject(this);
 
