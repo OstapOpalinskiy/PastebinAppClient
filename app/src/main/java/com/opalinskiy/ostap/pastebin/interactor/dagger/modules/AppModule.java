@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.interactor.dagger.modules;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.Application;
@@ -20,20 +21,32 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 @Module
 public class AppModule {
-    Application app;
 
-    public AppModule(Application app) {
-        this.app = app;
+    @Singleton
+    @Provides
+    Context provideContext(){
+      return Application.getContext();
     }
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit() {
+    HttpLoggingInterceptor provideHttpLoggingInterceptor(){
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return logging;
+    }
+
+    @Singleton
+    @Provides
+    OkHttpClient.Builder provideHttpClient(HttpLoggingInterceptor logging){
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
+        return httpClient;
+    }
 
+    @Singleton
+    @Provides
+    Retrofit provideRetrofit( OkHttpClient.Builder httpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClient.build())
                 .baseUrl(Constants.BASE_URL)
@@ -44,8 +57,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    SharedPreferences provideSharedPreferences() {
-        return app.getSharedPreferences(Constants.PREFS_NAME, 0);
+    SharedPreferences provideSharedPreferences(Context context) {
+        return context.getSharedPreferences(Constants.PREFS_NAME, 0);
     }
 
     @Singleton

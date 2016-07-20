@@ -17,7 +17,7 @@ public class Application extends android.app.Application {
         super.onCreate();
         instance = this;
         component = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .appModule(new AppModule())
                 .build();
     }
 

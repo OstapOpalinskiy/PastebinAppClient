@@ -21,8 +21,6 @@ import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerMainPresenterComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.MainPresenterComponent;
-
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MainPresenterModule;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.view.LoginFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;

@@ -15,9 +15,9 @@ public interface IMyPastesScreen {
 
         void getTrends();
 
-        void showMyPastes(SharedPreferences prefs);
+        void showMyPastes();
 
-        void choseTitle(int myOrTrending);
+        void choseTitle();
 
         void setUsersList(List<Paste> list);
 

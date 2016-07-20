@@ -1,5 +1,7 @@
 package com.opalinskiy.ostap.pastebin.interactor.dagger.modules;
 
+import android.content.SharedPreferences;
+
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
@@ -20,8 +22,8 @@ public class MyPastesModule {
 
     @Provides
     IMyPastesScreen.IPresenter provideMyPastesPresenter(IDataInteractor model, RequestParams
-            parameters){
-        return new MyPastesPresenter(view, myOrTrending, model, parameters);
+            parameters, SharedPreferences prefs){
+        return new MyPastesPresenter(view, myOrTrending, model, parameters, prefs);
     }
 
 }

@@ -21,8 +21,8 @@ public class ProfileModule {
     }
 
     @Provides
-    IProfileScreen.IPresenter provideProfileModule(IMainScreen.IPresenter mainPresenter,
-                                          IDataInteractor model, RequestParams parameters, SharedPreferences prefs){
+    IProfileScreen.IPresenter provideProfileModule(IMainScreen.IPresenter mainPresenter, IDataInteractor model
+            , RequestParams parameters, SharedPreferences prefs) {
         return new ProfilePresenter(mainPresenter, view, model, parameters, prefs);
     }
 }

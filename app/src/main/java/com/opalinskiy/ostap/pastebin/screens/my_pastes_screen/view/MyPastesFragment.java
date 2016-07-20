@@ -1,6 +1,5 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.view;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.DaggerMyPastesComponent;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.components.MyPastesComponent;
-import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.AppModule;
 import com.opalinskiy.ostap.pastebin.interactor.dagger.modules.MyPastesModule;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
@@ -33,8 +31,6 @@ public class MyPastesFragment extends BaseFragment
     IMyPastesScreen.IPresenter presenter;
     private RecyclerView recyclerView;
     private int myOrTrending;
-    // TODO: 7/19/16 It can be injected via component
-    private SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -50,9 +46,8 @@ public class MyPastesFragment extends BaseFragment
                 .build();
         component.inject(this);
 
-        // TODO: 7/19/16 Why do we want set myOrTrending, if we injected via constructor of presenter
-        presenter.choseTitle(myOrTrending);
-        presenter.showMyPastes(prefs);
+        presenter.choseTitle();
+        presenter.showMyPastes();
         Log.d(Constants.TAG1, "TRENDING FRAGMENT onCreateView()");
         return view;
     }
@@ -61,12 +56,7 @@ public class MyPastesFragment extends BaseFragment
 
         Bundle args = new Bundle();
         // TODO: 7/19/16 Why do you check this? You can give it to argument
-        if (myOrTRending == Constants.TRENDING_PASTES) {
-            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
-        } else {
-            args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.MY_PASTES);
-        }
-
+        args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTRending);
         MyPastesFragment fragment = new MyPastesFragment();
         fragment.setArguments(args);
         return fragment;
@@ -75,7 +65,6 @@ public class MyPastesFragment extends BaseFragment
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
-        prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
     }
 
     @Override

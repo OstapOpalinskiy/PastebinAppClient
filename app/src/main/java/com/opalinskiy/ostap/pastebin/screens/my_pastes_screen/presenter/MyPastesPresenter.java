@@ -25,17 +25,20 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private int myOrTrending;
     private IDataInteractor model;
     private RequestParams parameters;
+    private SharedPreferences prefs;
 
     @Inject
-    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, IDataInteractor model, RequestParams parameters) {
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, IDataInteractor model
+            , RequestParams parameters, SharedPreferences prefs) {
         this.view = view;
         this.myOrTrending = myOrTrending;
         this.model = model;
         this.parameters = parameters;
+        this.prefs = prefs;
     }
 
     @Override
-    public void showMyPastes(SharedPreferences prefs) {
+    public void showMyPastes() {
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         loadData(userKey, isRegistered);
@@ -54,7 +57,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     }
 
     @Override
-    public void choseTitle(int myOrTrending) {
+    public void choseTitle() {
         Resources r = Application.getContext().getResources();
         if (myOrTrending == Constants.MY_PASTES) {
             view.setTitle(r.getString(R.string.my_pastes));
